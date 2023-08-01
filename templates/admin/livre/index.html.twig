@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre index{% endblock %}
+
+{% block titre %}Liste des livres{% endblock %}
+
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Résumé</th>
+                <th>Genres</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livre in livres %}
+            <tr>
+                <td>{{ livre.id }}</td>
+                <td>{{ livre.titre }}</td>
+                <td>{{ livre.auteur.prenom ~ " " ~ livre.auteur.nom }}</td>
+                <td>{{ livre.resume }}</td>
+                <td>
+                {% for genre in livre.genres %}
+                    {# La variable 'loop' donne des informations sur les itérations (=tours) dans une balise 'for'
+                        loop.last   vaut true si c'est le dernier tour
+                        loop.first  vaut true si c'est le 1er tour
+                        loop.index  est un entier qui permet de savoir à quel tour on est
+                        ...
+                    #}
+                    {{ genre.libelle ~ (loop.last ? "" : ", ") }}
+                {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_livre_show', {'id': livre.id}) }}">
+                        <i class="fa fa-book-open"></i>
+                    </a>
+                    <a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_livre_new') }}">Create new</a>
+{% endblock %}

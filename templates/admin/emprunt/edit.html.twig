@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt modifier{% endblock %}
+
+{% block titre %}Modifier un emprunt{% endblock %}
+
+{% block body %}
+
+    {{ include('admin/emprunt/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    
+{% endblock %}

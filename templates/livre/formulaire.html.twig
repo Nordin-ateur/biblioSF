@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{# EXERCICE : quand le formulaire est affiché pour ajouter, le titre doit être "Ajouter un livre"
+              quand le formulaire est affiché pour modifier, le titre doit être "Modifier le livre n°..." #}
+{% block titre%}
+
+    {% if livre is defined %}
+        Modifier le livre n°{{ livre.id }}
+    {% else %}
+        Ajouter un livre
+    {% endif %}
+    
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <div class="form-group">
+            <label for="titre">Titre*</label>
+            <input type="text" name="titre" id="titre" class="form-control" required value="{{ livre is defined ? livre.titre : "" }}">
+        </div>        
+        <div class="form-group">
+            <label for="resume">Résumé</label>
+            <textarea type="text" name="resume" id="resume" class="form-control" >{{ livre is defined ? livre.resume : "" }}</textarea>
+        </div>       
+        <div class="d-flex mt-3 justify-content-between">
+            <button type="submit" class="btn btn-primary mr-5">Enregistrer</button>
+            
+            <button type="reset" class="btn btn-warning float-right mr-5">Effacer</button>
+
+            <a href="{{ path("app_livre")}}" class="btn btn-danger">Annuler</a>
+        </div>
+    </form>
+{% endblock %}

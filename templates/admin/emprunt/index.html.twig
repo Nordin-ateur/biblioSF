@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt index{% endblock %}
+
+{% block titre %}Liste des emprunts{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Abonné</th>
+                <th>Livre</th>
+                <th>Emprunt</th>
+                <th>Retour</th>
+                <th><i class="fa fa-cogs"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emprunt in emprunts %}
+            <tr>
+                <td>{{ emprunt.id }}</td>
+                <td>{{ emprunt.abonne.pseudo }}</td>
+                <td>{{ emprunt.livre.titreComplet }}</td>
+                <td>{{ emprunt.dateEmprunt|date('d/m/Y') }}</td>
+                <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('d/m/Y') : 'à rendre' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_emprunt_show', {'id': emprunt.id}) }}">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="{{ path('app_admin_emprunt_edit', {'id': emprunt.id}) }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun emprunt n'a été trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

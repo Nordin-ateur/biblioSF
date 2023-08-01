@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un auteur{% endblock %}
+
+{% block titre %}Ajouter un auteur{% endblock %}
+
+{% block body %}
+
+    {{ include('admin/auteur/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_auteur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {# <h2>Bonjour {{ personne["nom"] ~ " " ~ personne["prenom"] }}</h2> #}
+    {# Dans Twig, on utilise la même syntaxe pour accéder aux indices d'un tableau associatif ou
+        aux propriétés d'un objet. 
+        L'opérateur pour accéder aux propriétés est le .  (en PHP c'est ->)
+    #}
+    <h2>Bonjour {{ personne.prenom ~ " " ~ personne.nom }}</h2>
+{% endblock %}
+
+{% block titre %}Salutations ! {% endblock %}
+

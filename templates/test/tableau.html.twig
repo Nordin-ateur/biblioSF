@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <p>Pour utiliser une variable de type <i>array</i> dans TWIG, on peut utiliser la même syntaxe que PHP.</p>
+    <p><code>tab[0]</code> pour accéder à la 1ère valeur du tableau, par exemple.</p>
+    {{ tab[0] }}
+
+    <p>3<sup>ième</sup> valeur du tableau : {{ tab[2] }}</p>
+    {# BALISE FOR 
+    syntaxe {% for i in depart..arrivee %} ... {% endfor %}
+                    depart et arrivee sont de type integer
+    #}
+    {% for i in 1..10 %}
+        {{ i ~ ", " }}
+    {% endfor %}
+
+    <p>Pour calculer la taille d'un tableau avec TWIG, on utilise un type de fonction particulier qu'on appelle 
+        <strong>FILTRE</strong>. Le filtre qui calcule la taille d'un tableau est <i>length</i>.
+        Les filtres ont la syntaxe suivante : </p>
+    <p><code>valeur|filtre</code></p>
+    <p>La taille du tableau est {{ tab|length }}</p>
+
+    {% for i in 0..tab|length - 1 %}
+        {{ tab[i] ~ " " }}
+    {% endfor %}
+
+    {% for i in 1..tab|length %}
+        <p>{{ tab[i-1] ~ " " }}</p>
+    {% endfor %}
+
+    <hr>
+    {# Boucle FOREACH : balise FOR #}
+    {% for valeur in tab %}
+        {{ valeur ~ " " }}
+    {% endfor %}
+    <br>
+    {% for indice, valeur in tab %}
+        {{indice ~ " : " ~ valeur }}<br>
+    {% endfor %}
+    <hr>
+{% endblock %}

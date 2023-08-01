@@ -1,0 +1,18 @@
+{{ form_start(form, {attr: {id: "frmEmprunt"}}) }}
+    {{ form_row(form.abonne) }}
+    {{ form_row(form.livre) }}
+
+    <div class="d-flex justify-content-between">
+        {{ form_row(form.dateEmprunt) }}
+        {{ form_row(form.dateRetour) }}
+    </div>
+
+{{ form_end(form) }}
+
+<div class="d-flex justify-content-between">
+    <button class="btn btn-primary" form="frmEmprunt">{{ button_label|default('Enregistrer') }}</button>
+    {% if emprunt.id is not null %}
+        {{ include('admin/emprunt/_delete_form.html.twig') }}
+    {% endif %}
+    <a href="{{ path('app_admin_emprunt_index') }}" class="btn btn-secondary">Annuler</a>
+</div>

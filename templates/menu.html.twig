@@ -1,0 +1,147 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            Biblio
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {# EXERCICE : 1. remplacer le lien Home par un lien pour se connecter, 
+                              remplacer le lien Link par un lien pour s'inscrire
+                              2. On ne doit voir les liens connexion/inscription que si on n'est pas connecté.
+                                    Mais si on est connecté on voit le lien avec son pseudo, et un lien de déconnexion 
+                #}
+                {% if not app.user %}
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path('app_login') }}">
+                            <i class="fa fa-sign-in-alt"></i>           {# connexion #}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">
+                            <i class="fa fa-user-plus"></i>             {# inscription #}     
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_espace_lecture_index') }}"><i class="fa fa-user"></i> {{ app.user.pseudo }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">
+                            <i class="fa fa-sign-out-alt"></i>      {# déconnexion #}
+                        </a>
+                    </li>
+
+                    {% if is_granted("ROLE_ADMIN") %}
+                        {# -------------- CRUD --------------------------- #}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Auteurs
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_auteur_index') }}">Liste</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_auteur_new') }}">Ajouter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Livres
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_livre_index') }}">Liste</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_livre_new') }}">Ajouter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genres
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_genre_index') }}">Liste</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_genre_new') }}">Ajouter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Abonnés
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_abonne_index') }}">Liste</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_abonne_new') }}">Ajouter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Emprunts
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_emprunt_index') }}">Liste</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_emprunt_new') }}">Ajouter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Test
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_livre') }}">
+                                        Liste livres                                                           
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_livre_ajouter') }}">
+                                        Ajouter livre
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Something else here
+                                                                            
+                                        </a>
+                                    </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                {% endif %}
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

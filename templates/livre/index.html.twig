@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Résumé</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {# EXERCICE : affichez tous les livres #}
+                {# {% if liste_livres|length %}
+                    {% for livre in liste_livres %}
+                        <tr>
+                            <td>{{ livre.id }}</td>
+                            <td>{{ livre.titre }}</td>
+                            <td>{{ livre.resume }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3">Pas de livres</td></tr>
+                {% endif %} #}
+
+            {# EXERCICE 2 : s'il n'y a pas de livres (
+                si la liste est vide),
+                affichez une ligne avec 1 seule colonne
+                qui contient le texte "Pas de livres"
+            #}
+
+            {% for livre in liste_livres %}
+                <tr>
+                    <td>{{ livre.id }}</td>
+                    <td>{{ livre.titre }}</td>
+                    <td>{{ livre.resume }}</td>
+                    <td>
+                        <a href="{{ path('app_livre_modifier', {id: livre.id}) }}">📝</a>
+                        <a href="{{ path('app_livre_supprimer', {id: livre.id}) }}">🗑</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3">Pas de livres</td></tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+{% endblock %}

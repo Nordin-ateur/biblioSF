@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auteur{% endblock %}
+
+{% block titre %}Fiche Auteur{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ auteur.id }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ auteur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ auteur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Bio</th>
+                <td>{{ auteur.bio }}</td>
+            </tr>
+            <tr>
+                <th>Date de naissance</th>
+                <td>{{ auteur.naissance ? auteur.naissance|date('d/m/Y') : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>Livres</th>
+                <td>
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Titre</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for livre in auteur.livres %}
+                                <tr>
+                                    <td>{{ livre.id }}</td>
+                                    <td>{{ livre.titre }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">Aucun livre de cet auteur dans la base de données</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_auteur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+
+    <a href="{{ path('app_admin_auteur_edit', {'id': auteur.id}) }}" class="btn btn-primary">Modifier</a>
+
+    {{ include('admin/auteur/_delete_form.html.twig') }}
+{% endblock %}

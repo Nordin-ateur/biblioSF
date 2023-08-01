@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{# 
+    Affichez le titre h1 dans celui de base.html.twig 
+    Affichez le nom et le prénom dans 1 seule colonne
+    Ajoutez 1 colonne "Nb de livres" qui affiche le nombre de livres de chaque auteur
+
+#}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block titre %}Liste des auteurs{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Bio</th>
+                <th>Date de naissance</th>
+                <th>Nb de livres</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auteur in auteurs %}
+            <tr>
+                <td>{{ auteur.id }}</td>
+                <td>{{ auteur.prenom ~ " " ~ auteur.nom }}</td>
+                <td>{{ auteur.bio }}</td>
+                <td>{{ auteur.naissance ? auteur.naissance|date('d/m/Y') : '' }}</td>
+                <td>{{ auteur.livres|length }}</td>
+                <td>
+                    <a href="{{ path('app_admin_auteur_show', {'id': auteur.id}) }}">show</a>
+                    <a href="{{ path('app_admin_auteur_edit', {'id': auteur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_auteur_new') }}">Create new</a>
+{% endblock %}

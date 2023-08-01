@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Nombres au carré{% endblock %}
+
+{% block titre %}{{longueur + 0}} premiers nombres au carré{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombres</th>
+                <th>Carrés</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for nb in 1..longueur %}
+                <tr>
+                    <td>{{ nb }}</td>
+                    <td>{{ nb ** 2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -2,8 +2,9 @@
 
 {% block title %}Livre{% endblock %}
 
+{% block titre %}Fiche Livre{% endblock %}
+
 {% block body %}
-    <h1>Livre</h1>
 
     <table class="table">
         <tbody>
@@ -16,15 +17,40 @@
                 <td>{{ livre.titre }}</td>
             </tr>
             <tr>
-                <th>Resume</th>
+                <th>Résumé</th>
                 <td>{{ livre.resume }}</td>
+            </tr>
+            <tr>
+                <th>Couverture</th>
+                <td>
+                    {% if livre.couverture %}
+                        <img src="{{ chemin_couvertures ~ livre.couverture }}" alt="pas de couverture" class="miniature">
+                    {% else %}
+                        <div class="alert alert-warning">couverture du livre {{livre.titre }} manquante</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Auteur</th>
+                <td>{{ livre.auteur.identite }}</td>
+            </tr>
+            <tr>
+                <th>Genres</th>
+                <td>{{ livre.genresTexte }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_livre_index') }}">back to list</a>
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('app_admin_livre_index') }}" class="btn btn-secondary">
+            <i class="fa fa-reply"></i> Retour
+        </a>
 
-    <a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}">edit</a>
+        <a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}" class="btn btn-primary">
+            <i class="fa fa-edit"></i> Modifier
+        </a>
 
-    {{ include('admin/livre/_delete_form.html.twig') }}
+        {{ include('admin/livre/_delete_form.html.twig') }}
+    </div>
+
 {% endblock %}

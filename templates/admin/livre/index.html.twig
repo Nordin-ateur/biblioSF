@@ -10,6 +10,7 @@
         <thead class="table-dark">
             <tr>
                 <th>Id</th>
+                <th>Couverture</th>
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Résumé</th>
@@ -21,6 +22,12 @@
         {% for livre in livres %}
             <tr>
                 <td>{{ livre.id }}</td>
+                <td>
+                    {% if livre.couverture %}
+                        <img src="{{ chemin_couvertures ~ livre.couverture }}" alt="couverture de {{ livre.titre }}" class="miniature">
+                    {% endif %}
+                    
+                </td>
                 <td>{{ livre.titre }}</td>
                 <td>{{ livre.auteur.prenom ~ " " ~ livre.auteur.nom }}</td>
                 <td>{{ livre.resume }}</td>

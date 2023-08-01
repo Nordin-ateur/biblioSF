@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/admin/livre')]
 class LivreController extends AbstractController
@@ -30,9 +31,19 @@ class LivreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fichier = $form->get("couverture")->getData();
+            if( $fichier ) {
+                $nomFichierOriginal = pathinfo($fichier->getClientOriginalName(), PATHINFO_FILENAME);
+                $slugger = new AsciiSlugger();
+                $nouveauNomFichier = $slugger->slug($nomFichierOriginal);
+                $nouveauNomFichier .= "_" . uniqid() . "." . $fichier->guessExtension();
+                $fichier->move($this->getParameter("dossier_couvertures"), $nouveauNomFichier);
+                $livre->setCouverture($nouveauNomFichier);
+                $this->addFlash("info", "L'image a bien été téléchargée");
+            }
             $entityManager->persist($livre);
             $entityManager->flush();
-
+            $this->addFlash("succes", "Le nouveau livre a bien été enregistré" );
             return $this->redirectToRoute('app_admin_livre_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -57,8 +68,19 @@ class LivreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            
+            if( $fichier = $form->get("couverture")->getData() ) {
+                $nomFichierOriginal = pathinfo($fichier->getClientOriginalName(), PATHINFO_FILENAME);
+                $slugger = new AsciiSlugger();
+                $nouveauNomFichier = $slugger->slug($nomFichierOriginal);
+                $nouveauNomFichier .= "_" . uniqid() . "." . $fichier->guessExtension();
+                $fichier->move($this->getParameter("dossier_couvertures"), $nouveauNomFichier);
+                $livre->setCouverture($nouveauNomFichier);
+                $this->addFlash("info", "L'image a bien été téléchargée");
+            }
 
+            $entityManager->flush();
+            $this->addFlash("success", "Le livre n°" . $livre->getId() . " a bien été modifié");
             return $this->redirectToRoute('app_admin_livre_index', [], Response::HTTP_SEE_OTHER);
         }
 

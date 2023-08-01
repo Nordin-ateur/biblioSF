@@ -32,6 +32,9 @@ class Livre
     #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Emprunt::class, orphanRemoval: true)]
     private Collection $emprunts;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $couverture = null;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
@@ -133,9 +136,33 @@ class Livre
         return $this;
     }
 
+    public function getCouverture(): ?string
+    {
+        return $this->couverture;
+    }
+
+    public function setCouverture(?string $couverture): static
+    {
+        $this->couverture = $couverture;
+
+        return $this;
+    }
+
     // -------------------------------------------------------------------
     public function getTitreComplet(): string
     {
         return $this->id . " - " . $this->titre . " (" . $this->auteur->getPrenom() . " " . $this->auteur->getNom() . ")";
+    }
+
+    public function getGenresTexte(): string
+    {
+        $texte = "";
+        foreach ($this->genres as $genre) {
+            if( $texte != "" ) {
+                $texte .= ", ";
+            }
+            $texte .= $genre->getLibelle();
+        }
+        return $texte;
     }
 }

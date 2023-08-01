@@ -118,4 +118,10 @@ class Auteur
 
         return $this;
     }
+
+    // -------------------------------------
+    public function getIdentite(): string
+    {
+        return trim("$this->prenom $this->nom"); 
+    }
 }

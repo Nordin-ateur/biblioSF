@@ -28,7 +28,7 @@
         {% for auteur in auteurs %}
             <tr>
                 <td>{{ auteur.id }}</td>
-                <td>{{ auteur.prenom ~ " " ~ auteur.nom }}</td>
+                <td>{{ auteur.identite }}</td>
                 <td>{{ auteur.bio }}</td>
                 <td>{{ auteur.naissance ? auteur.naissance|date('d/m/Y') : '' }}</td>
                 <td>{{ auteur.livres|length }}</td>

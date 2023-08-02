@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Emprunt{% endblock %}
 
@@ -22,9 +22,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_emprunt_index') }}">back to list</a>
-
-    <a href="{{ path('app_admin_emprunt_edit', {'id': emprunt.id}) }}">edit</a>
-
-    {{ include('admin/emprunt/_delete_form.html.twig') }}
+    {{ include('admin/_communs/ligne_boutons.html.twig', {entite: emprunt}) }}
 {% endblock %}

@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
-class Livre
+class Livre extends EntiteBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -165,4 +165,5 @@ class Livre
         }
         return $texte;
     }
+
 }

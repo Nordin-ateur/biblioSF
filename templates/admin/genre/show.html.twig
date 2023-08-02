@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Genre{% endblock %}
 
+{% block titre %}Fiche Genre{% endblock %}
+
 {% block body %}
-    <h1>Genre</h1>
 
     <table class="table">
         <tbody>
@@ -12,19 +13,41 @@
                 <td>{{ genre.id }}</td>
             </tr>
             <tr>
-                <th>Libelle</th>
+                <th>Libellé</th>
                 <td>{{ genre.libelle }}</td>
             </tr>
             <tr>
-                <th>MotsCles</th>
+                <th>Mots clés</th>
                 <td>{{ genre.motsCles }}</td>
+            </tr>
+
+            <tr>
+                <th>Livres</th>
+                <td>
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID - Titre - Auteur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for livre in genre.livres %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('app_admin_livre_show', {id: livre.id}) }}">{{ livre.titreComplet }}</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td><div class="alert alert-info">Aucun livre trouvé</div></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_genre_index') }}">back to list</a>
-
-    <a href="{{ path('app_admin_genre_edit', {'id': genre.id}) }}">edit</a>
-
-    {{ include('admin/genre/_delete_form.html.twig') }}
+    {{ include('admin/_communs/ligne_boutons.html.twig', {entite: genre})}}
 {% endblock %}

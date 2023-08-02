@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: AbonneRepository::class)]
 #[UniqueEntity(fields: ['pseudo'], message: 'Ce pseudo est déjà utilisé')]
-class Abonne implements UserInterface, PasswordAuthenticatedUserInterface
+class Abonne extends EntiteBase implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -203,4 +203,11 @@ class Abonne implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    // -------------------------------------
+    public function getIdentite(): string
+    {
+        return trim("$this->prenom $this->nom"); 
+    }
+
 }

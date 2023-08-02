@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Livre{% endblock %}
 
@@ -41,16 +41,5 @@
         </tbody>
     </table>
 
-    <div class="d-flex justify-content-between">
-        <a href="{{ path('app_admin_livre_index') }}" class="btn btn-secondary">
-            <i class="fa fa-reply"></i> Retour
-        </a>
-
-        <a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}" class="btn btn-primary">
-            <i class="fa fa-edit"></i> Modifier
-        </a>
-
-        {{ include('admin/livre/_delete_form.html.twig') }}
-    </div>
-
+    {{ include("admin/_communs/ligne_boutons.html.twig", {entite: livre}) }}
 {% endblock %}

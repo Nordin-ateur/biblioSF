@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Auteur{% endblock %}
 
@@ -58,9 +58,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_auteur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    {{ include('admin/_communs/ligne_boutons.html.twig', {entite: auteur}) }}
 
-    <a href="{{ path('app_admin_auteur_edit', {'id': auteur.id}) }}" class="btn btn-primary">Modifier</a>
-
-    {{ include('admin/auteur/_delete_form.html.twig') }}
 {% endblock %}

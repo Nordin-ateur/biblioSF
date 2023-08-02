@@ -1,35 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Bienvenue à la biblio{% endblock %}
 
 {% block body %}
 
 <div class="d-flex flex-wrap">
     {% for livre in livres %}
-        <div class="card mb-3 mx-2" style="width: 340px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="couverture">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ livre.titre }}</h5>
-                        <p class="card-text">
-                            <a href="{{ path('app_admin_auteur_show', {id: livre.auteur.id}) }}" >{{ livre.auteur.prenom ~ " " ~ livre.auteur.nom }}</a>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-body-secondary">
-                                {% if is_granted("ROLE_LECTEUR") %}
-                                <a href="{{ path('app_espace_lecture_emprunter', {id: livre.id}) }}">
-                                    <i class="fa fa-shopping-cart"></i> Emprunter
-                                </a>
-                                {% endif %}
-                            </small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>    
+        {{ include("livre/vignette.html.twig") }}
     {% endfor %}
 </div>
 

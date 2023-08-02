@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hasher;
 
 #[Route('/admin/abonne')]
 class AbonneController extends AbstractController
@@ -23,13 +24,17 @@ class AbonneController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_abonne_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Hasher $hasher): Response
     {
         $abonne = new Abonne();
         $form = $this->createForm(AbonneType::class, $abonne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mdp = $form->get("password")->getData();
+            $password = $hasher->hashPassword($abonne, $mdp);
+            $abonne->setPassword($password);
+
             $entityManager->persist($abonne);
             $entityManager->flush();
 
@@ -51,12 +56,17 @@ class AbonneController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_abonne_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Abonne $abonne, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Abonne $abonne, EntityManagerInterface $entityManager, Hasher $hasher): Response
     {
         $form = $this->createForm(AbonneType::class, $abonne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mdp = $form->get("password")->getData();
+            if( $mdp ) {
+                $password = $hasher->hashPassword($abonne, $mdp);
+                $abonne->setPassword($password);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_admin_abonne_index', [], Response::HTTP_SEE_OTHER);
